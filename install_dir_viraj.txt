@@ -1,0 +1,12 @@
+Installing lib/libfuse3.so.3.2.1 to /usr/local/lib/x86_64-linux-gnu/libfuse3.so.3.2.1
+Installing util/fusermount3 to /usr/local/bin/fusermount3
+Installing util/mount.fuse3 to /usr/local/sbin/mount.fuse3
+Installing fuse.h to /usr/local/include/fuse3
+Installing fuse_common.h to /usr/local/include/fuse3
+Installing fuse_lowlevel.h to /usr/local/include/fuse3
+Installing fuse_opt.h to /usr/local/include/fuse3
+Installing cuse_lowlevel.h to /usr/local/include/fuse3
+Installing /media/viraj/Work/Rutgers/Courses/Sem3/OS/Assng3/fuse-3.2.1/doc/fusermount3.1 to /usr/local/share/man/man1
+Installing /media/viraj/Work/Rutgers/Courses/Sem3/OS/Assng3/fuse-3.2.1/doc/mount.fuse.8 to /usr/local/share/man/man8
+Installing /media/viraj/Work/Rutgers/Courses/Sem3/OS/Assng3/fuse-3.2.1/build/meson-private/fuse3.pc to /usr/local/lib/x86_64-linux-gnu/pkgconfig
+Running custom install script '/media/viraj/Work/Rutgers/Courses/Sem3/OS/Assng3/fuse-3.2.1/util/install_helper.sh etc bin /lib/udev/rules.d'
