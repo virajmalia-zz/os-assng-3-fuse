@@ -13,7 +13,6 @@
 #include "config.h"
 #include "params.h"
 #include "block.h"
-#include "inode.c"
 
 #include <ctype.h>
 #include <dirent.h>
@@ -28,6 +27,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+#include "inode.c"
 #include "log.h"
 
 #define VRS_MAGIC_NUM 1707
@@ -45,7 +45,7 @@ typedef struct __attribute__((packed)) {
 // Get Full path from rootDir
 static void vrs_fullpath(char fpath[PATH_MAX], const char *path){
     strcpy(fpath, VRS_DATA->diskfile);
-    strncat(fpath, path, PATH_MAX); // ridiculously long paths will break here
+    //strncat(fpath, path, PATH_MAX); // ridiculously long paths will break here
     log_msg("vrs_fullpath:  diskfile = \"%s\", path = \"%s\", fpath = \"%s\"\n", VRS_DATA->diskfile, path, fpath);
 }
 
@@ -486,7 +486,7 @@ struct fuse_operations vrs_oper = {
 };
 
 void vrs_usage(){
-    fprintf(stderr, "usage:  vrvrs [FUSE and mount options] rootDir mountPoint\n");
+    fprintf(stderr, "usage:  ./sfs [FUSE and mount options] rootDir mountPoint\n");
     abort();
 }
 

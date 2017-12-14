@@ -8,6 +8,7 @@
 #include "inode.h"
 #include "params.h"
 #include "block.h"
+#include "log.h"
 #include <errno.h>
 
  // Local functions
