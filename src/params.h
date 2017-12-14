@@ -14,19 +14,34 @@
 // The FUSE API has been changed a number of times.  So, our code
 // needs to define the version of the API that we assume.  As of this
 // writing, the most current API version is 26
-#define FUSE_USE_VERSION 31
+#define FUSE_USE_VERSION 26
 
 // need this to get pwrite().  I have to use setvbuf() instead of
 // setlinebuf() later in consequence.
 #define _XOPEN_SOURCE 500
 
-// maintain vrsfs state in here
+// maintain bbfs state in here
 #include <limits.h>
 #include <stdio.h>
+#include <stdint.h>
+#include "list.h"
+
+typedef struct {
+	int id;
+	list_t node;
+} vrs_free_list;
 
 struct vrs_state {
     FILE *logfile;
-    char *rootdir;
+    char *diskfile;
+
+    vrs_free_list* state_inodes; // Array of list nodes for all inodes state info
+    vrs_free_list* state_data_blocks; // Array of data block nodes for all data blocks
+
+    list_t* free_inodes;
+    list_t* free_data_blocks;
+
+    uint32_t ino_root;
 };
 
 #define VRS_DATA ((struct vrs_state *) fuse_get_context()->private_data)

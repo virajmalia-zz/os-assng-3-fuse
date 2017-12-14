@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([fuse-tutorial], [2017-10-03], [joseph@pfeifferfamily.net])
+AC_INIT([fuse-tutorial], [2014-06-12], [joseph@pfeifferfamily.net])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/bbfs.c])
 AC_CONFIG_HEADERS([src/config.h])
@@ -36,5 +36,5 @@ AC_CHECK_FUNCS([ftruncate mkdir mkfifo realpath rmdir strerror utime])
 # Not all systems that support FUSE also support fdatasync (notably freebsd)
 AC_CHECK_FUNCS([fdatasync])
 
-AC_CONFIG_FILES([Makefile html/Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT

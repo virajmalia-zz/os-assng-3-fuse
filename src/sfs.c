@@ -12,12 +12,14 @@
 
 #include "config.h"
 #include "params.h"
+#include "block.h"
+#include "inode.c"
 
 #include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <fuse.h>
+#include "fuse.h"
 #include <libgen.h>
 #include <limits.h>
 #include <stdlib.h>
@@ -28,11 +30,23 @@
 
 #include "log.h"
 
+#define VRS_MAGIC_NUM 1707
+
+typedef struct __attribute__((packed)) {
+	uint32_t magic;
+	uint32_t num_data_blocks; // Total number of data blocks on disk.
+	uint32_t num_free_blocks; // Total number of free blocks.
+	uint32_t num_inodes; // Total number of inodes on disk.
+	uint32_t bitmap_inode_blocks;
+	uint32_t bitmap_data_blocks;
+	uint32_t inode_root;  // Root directory.
+} vrs_superblock;
+
 // Get Full path from rootDir
 static void vrs_fullpath(char fpath[PATH_MAX], const char *path){
-    strcpy(fpath, VRS_DATA->rootdir);
+    strcpy(fpath, VRS_DATA->diskfile);
     strncat(fpath, path, PATH_MAX); // ridiculously long paths will break here
-    log_msg("vrs_fullpath:  rootdir = \"%s\", path = \"%s\", fpath = \"%s\"\n", VRS_DATA->rootdir, path, fpath);
+    log_msg("vrs_fullpath:  diskfile = \"%s\", path = \"%s\", fpath = \"%s\"\n", VRS_DATA->diskfile, path, fpath);
 }
 
 void *vrs_init(struct fuse_conn_info *conn){
@@ -494,8 +508,8 @@ int main(int argc, char *argv[]){
 	       abort();
     }
 
-    // Pull the rootdir out of the argument list and save it in my internal data
-    vrs_data->rootdir = realpath(argv[argc-2], NULL);
+    // Pull the diskfile out of the argument list and save it in my internal data
+    vrs_data->diskfile = realpath(argv[argc-2], NULL);
     argv[argc-2] = argv[argc-1];
     argv[argc-1] = NULL;
     argc--;
